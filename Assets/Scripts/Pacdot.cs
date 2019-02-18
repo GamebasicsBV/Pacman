@@ -5,7 +5,7 @@ public class Pacdot : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.name == "pacman" ||
+		if((!GameManager.isAnimatorFlipped && other.name == "pacman") ||
 		   (GameManager.isAnimatorFlipped && (
 		        other.name == "pinky" ||
 		        other.name == "clyde" ||

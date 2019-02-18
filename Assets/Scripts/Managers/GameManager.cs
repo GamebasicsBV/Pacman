@@ -142,6 +142,9 @@ public class GameManager : MonoBehaviour {
     public void FlipAnimator()
     {
         isAnimatorFlipped = true;
+        AnimatorController[] animators = { BlinkyAnimatorController, PinkyAnimatorController, InkyAnimatorController, ClydeAnimatorController };
+
+        pacman.GetComponent<Animator>().runtimeAnimatorController = animators[new System.Random().Next(0, 4)];
         blinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
         pinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
         inky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
@@ -154,6 +157,7 @@ public class GameManager : MonoBehaviour {
     public void FlipAnimatorBack()
     {
         isAnimatorFlipped = false;
+        pacman.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
         blinky.GetComponent<Animator>().runtimeAnimatorController = BlinkyAnimatorController;
         pinky.GetComponent<Animator>().runtimeAnimatorController = PinkyAnimatorController;
         inky.GetComponent<Animator>().runtimeAnimatorController = InkyAnimatorController;
