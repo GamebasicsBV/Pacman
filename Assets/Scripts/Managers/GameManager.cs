@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -18,12 +19,19 @@ public class GameManager : MonoBehaviour {
     private GameObject inky;
     private GameObject clyde;
     private GameGUINavigation gui;
+    public AnimatorController PacmanAnimatorController;
+    public AnimatorController PinkyAnimatorController;
+    public AnimatorController InkyAnimatorController;
+    public AnimatorController BlinkyAnimatorController;
+    public AnimatorController ClydeAnimatorController;
 
-	public static bool scared;
+    public static bool scared;
+    public static bool isAnimatorFlipped = false;
     static public int score;
 
 	public float scareLength;
 	private float _timeToCalm;
+    private float _timeToFlipBack;
 
     public float SpeedPerLevel;
     
@@ -99,7 +107,10 @@ public class GameManager : MonoBehaviour {
 		if(scared && _timeToCalm <= Time.time)
 			CalmGhosts();
 
-	}
+	    if (isAnimatorFlipped && _timeToFlipBack <= Time.time)
+            FlipAnimatorBack();
+
+    }
 
 	public void ResetScene()
 	{
@@ -128,7 +139,30 @@ public class GameManager : MonoBehaviour {
 		else 		CalmGhosts();
 	}
 
-	public void ScareGhosts()
+    public void FlipAnimator()
+    {
+        isAnimatorFlipped = true;
+        blinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        pinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        inky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        clyde.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        _timeToFlipBack = Time.time + scareLength;
+
+        Debug.Log("Flip Animators");
+    }
+
+    public void FlipAnimatorBack()
+    {
+        isAnimatorFlipped = false;
+        blinky.GetComponent<Animator>().runtimeAnimatorController = BlinkyAnimatorController;
+        pinky.GetComponent<Animator>().runtimeAnimatorController = PinkyAnimatorController;
+        inky.GetComponent<Animator>().runtimeAnimatorController = InkyAnimatorController;
+        clyde.GetComponent<Animator>().runtimeAnimatorController = ClydeAnimatorController;
+
+        Debug.Log("Flip Animators back");
+    }
+
+    public void ScareGhosts()
 	{
 		scared = true;
 		blinky.GetComponent<GhostMove>().Frighten();
