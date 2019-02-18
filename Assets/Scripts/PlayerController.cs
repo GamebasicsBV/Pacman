@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
+    private bool _isInversed = false;
     public float speed = 0.4f;
     Vector2 _dest = Vector2.zero;
     Vector2 _dir = Vector2.zero;
@@ -107,10 +107,10 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody2D>().MovePosition(p);
 
         // get the next direction from keyboard
-        if (Input.GetAxis("Horizontal") > 0) _nextDir = Vector2.right;
-        if (Input.GetAxis("Horizontal") < 0) _nextDir = -Vector2.right;
-        if (Input.GetAxis("Vertical") > 0) _nextDir = Vector2.up;
-        if (Input.GetAxis("Vertical") < 0) _nextDir = -Vector2.up;
+        if (Input.GetAxis("Horizontal") > 0) _nextDir = _isInversed ? -Vector2.right : Vector2.right;
+        if (Input.GetAxis("Horizontal") < 0) _nextDir = _isInversed ? Vector2.right : -Vector2.right;
+        if (Input.GetAxis("Vertical") > 0) _nextDir = _isInversed ? -Vector2.up : Vector2.up;
+        if (Input.GetAxis("Vertical") < 0) _nextDir = _isInversed ? Vector2.up : -Vector2.up;
 
         // if pacman is in the center of a tile
         if (Vector2.Distance(_dest, transform.position) < 0.00001f)
