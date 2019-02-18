@@ -14,10 +14,12 @@ public class Energizer : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.name == "pacman")
+        if(col.name == "pacman" && !GameManager.isAnimatorFlipped)
         {
-            //gm.ScareGhosts();
-            gm.FlipAnimator();
+            if (new System.Random().Next(0, 2) < 1)
+                gm.ScareGhosts();
+            else
+                gm.FlipAnimator();
 
             Destroy(gameObject);
         }
