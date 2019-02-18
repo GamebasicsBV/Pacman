@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour {
 
     public static bool scared;
     public static bool isAnimatorFlipped = false;
+    public bool isCameraFollowingPacman = false;
+    public Camera camera;
     static public int score;
 
 	public float scareLength;
@@ -110,6 +112,8 @@ public class GameManager : MonoBehaviour {
 	    if (isAnimatorFlipped && _timeToFlipBack <= Time.time)
             FlipAnimatorBack();
 
+        if (isCameraFollowingPacman)
+            camera.transform.position = new Vector3(pacman.transform.position.x, pacman.transform.position.y, camera.transform.position.z);
     }
 
 	public void ResetScene()
