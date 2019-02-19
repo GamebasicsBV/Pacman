@@ -161,7 +161,10 @@ public class GameManager : MonoBehaviour {
 	    foreach (var spawnedPowerup in PowerupSpawnPoints.Where(x => x != null && x.SpawnedObject != null).Select(x => x.SpawnedObject).ToArray())
 	        Destroy(spawnedPowerup.gameObject);
 
-	    gameState = GameState.Init;  
+        InverseControls(false);
+	    FlipAnimatorBack();
+
+        gameState = GameState.Init;  
         gui.H_ShowReadyScreen();
 	}
 
@@ -275,9 +278,12 @@ public class GameManager : MonoBehaviour {
         spawnPoint.SpawnedObject = powerup;
     }
 
-    public void InverseControls()
+    public void InverseControls(bool? inversionEnabled = null)
     {
         var playerController = pacman.GetComponent<PlayerController>();
-        playerController._isInversed = !playerController._isInversed;
+        if (inversionEnabled.HasValue)
+            playerController._isInversed = inversionEnabled.Value;
+        else
+            playerController._isInversed = !playerController._isInversed;
     }
 }
