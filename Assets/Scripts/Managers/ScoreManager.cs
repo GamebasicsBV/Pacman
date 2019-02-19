@@ -83,7 +83,15 @@ public class ScoreManager : MonoBehaviour {
         scoreList.Clear();
         scoreList.Add(new Score("DATABASE TEMPORARILY UNAVAILABLE", 999999));
 
-        GameObject.FindGameObjectWithTag("ScoresText").GetComponent<Scores>().UpdateGUIText(scoreList);
+        var scoresText = GameObject.FindGameObjectWithTag("ScoresText");
+
+        if (scoresText != null)
+        {
+            var scores = GameObject.FindGameObjectWithTag("ScoresText").GetComponent<Scores>();
+            if (scores != null)
+                scores.UpdateGUIText(scoreList);
+        }
+
         yield return new WaitForSeconds(0f);
     }
 

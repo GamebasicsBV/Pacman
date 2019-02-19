@@ -17,7 +17,8 @@ public class UIScript : MonoBehaviour {
 		txt_high = GetComponentsInChildren<Text>()[0];
         txt_level = GetComponentsInChildren<Text>()[2];
 
-	    for (int i = 0; i < 3 - GameManager.lives; i++)
+	    var gameManagerLives = GameObject.Find("Game Manager").GetComponent<GameManager>().lives;
+        for (int i = 0; i < 3 - gameManagerLives; i++)
 	    {
 	        Destroy(lives[lives.Count-1]);
             lives.RemoveAt(lives.Count-1);

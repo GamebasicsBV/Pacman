@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     // Game variables
 
     public int Level = 0;
-    public static int lives = 3;
+    public int lives = 3;
 
 	public enum GameState { Init, Game, Dead, Scores }
 	public static GameState gameState;
@@ -260,7 +260,7 @@ public class GameManager : MonoBehaviour {
     {
         score = 0;
         //Level = 0;
-        lives = 3;
+        //lives = 3;
         Destroy(GameObject.Find("Game Manager"));
     }
 
