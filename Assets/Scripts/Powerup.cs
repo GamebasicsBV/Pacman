@@ -4,13 +4,16 @@ using System.Collections;
 public class Powerup : MonoBehaviour {
 
     private GameManager gm;
-    public Sprite sprites;
+
+    public Sprite[] sprites;
 
 	// Use this for initialization
 	void Start ()
 	{
 	    gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
         if( gm == null )    Debug.Log("Powerup.cs did not find Game Manager!");
+
+	    GetComponent<SpriteRenderer>().sprite = sprites[new System.Random().Next(0, sprites.Length)];
 	}
 
     void OnTriggerEnter2D(Collider2D col)
