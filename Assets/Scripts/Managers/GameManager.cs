@@ -157,10 +157,11 @@ public class GameManager : MonoBehaviour {
 		inky.GetComponent<GhostMove>().InitializeGhost();
 		clyde.GetComponent<GhostMove>().InitializeGhost();
 
-        foreach (var spawnedPowerup in PowerupSpawnPoints.Where(x => x.SpawnedObject != null).Select(x => x.SpawnedObject).ToArray())
-            Destroy(spawnedPowerup.gameObject);
+        // Ruim gespawnde powerups op.
+	    foreach (var spawnedPowerup in PowerupSpawnPoints.Where(x => x != null && x.SpawnedObject != null).Select(x => x.SpawnedObject).ToArray())
+	        Destroy(spawnedPowerup.gameObject);
 
-        gameState = GameState.Init;  
+	    gameState = GameState.Init;  
         gui.H_ShowReadyScreen();
 	}
 
