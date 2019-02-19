@@ -25,6 +25,8 @@ public class Powerup : MonoBehaviour {
             //    else
             //        gm.FlipAnimator();
 
+            gm.InverseControls();
+
             Destroy(gameObject);
         }
     }

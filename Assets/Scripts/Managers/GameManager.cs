@@ -253,4 +253,10 @@ public class GameManager : MonoBehaviour {
 
         Instantiate(Powerup, spawnPoint.position, spawnPoint.rotation);
     }
+
+    public void InverseControls()
+    {
+        var playerController = pacman.GetComponent<PlayerController>();
+        playerController._isInversed = !playerController._isInversed;
+    }
 }

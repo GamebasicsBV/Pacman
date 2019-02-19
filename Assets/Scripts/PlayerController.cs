@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    private bool _isInversed = false;
+    public bool _isInversed = false;
     public float speed = 0.4f;
     Vector2 _dest = Vector2.zero;
     Vector2 _dir = Vector2.zero;
