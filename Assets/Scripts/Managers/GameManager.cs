@@ -28,14 +28,16 @@ public class GameManager : MonoBehaviour {
     public static bool scared;
     public static bool isAnimatorFlipped = false;
     public bool isCameraFollowingPacman = false;
+	public bool isCameraBackgroundGoingFlashy = false;
     public Camera camera;
     static public int score;
 
 	public float scareLength;
 	private float _timeToCalm;
     private float _timeToFlipBack;
+	private float _timeToCameraBackgroundFlash;
 
-    public float SpeedPerLevel;
+	public float SpeedPerLevel;
     
     //-------------------------------------------------------------------
     // singleton implementation
@@ -114,6 +116,12 @@ public class GameManager : MonoBehaviour {
 
         if (isCameraFollowingPacman)
             camera.transform.position = new Vector3(pacman.transform.position.x, pacman.transform.position.y, camera.transform.position.z);
+
+		if (isCameraBackgroundGoingFlashy && _timeToCameraBackgroundFlash <= Time.time) {
+			Color[] colors = { Color.cyan, Color.green, Color.blue, Color.yellow, Color.red, Color.magenta };
+			camera.backgroundColor = colors[new System.Random().Next(colors.Length)];
+			_timeToCameraBackgroundFlash = Time.time + 1;
+		}
     }
 
 	public void ResetScene()
@@ -141,6 +149,10 @@ public class GameManager : MonoBehaviour {
 	{
 		if(!scared)	ScareGhosts();
 		else 		CalmGhosts();
+	}
+
+	public void SetCameraBackgroundFlashy() {
+
 	}
 
     public void FlipAnimator()
