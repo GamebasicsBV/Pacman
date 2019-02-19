@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -41,6 +42,8 @@ public class GameManager : MonoBehaviour {
 	private float _timeToCameraBackgroundFlash;
 
 	public float SpeedPerLevel;
+
+	public string NextLevel;
     
     //-------------------------------------------------------------------
     // singleton implementation
@@ -52,8 +55,7 @@ public class GameManager : MonoBehaviour {
         {
             if (_instance == null)
             {
-                _instance = GameObject.FindObjectOfType<GameManager>();
-                DontDestroyOnLoad(_instance.gameObject);
+				_instance = GameObject.FindObjectOfType<GameManager>();
             }
 
             return _instance;
@@ -68,7 +70,6 @@ public class GameManager : MonoBehaviour {
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {
@@ -82,8 +83,6 @@ public class GameManager : MonoBehaviour {
 	void Start () 
 	{
 		gameState = GameState.Init;
-
-	    InvokeRepeating("SpawnPowerup", 3f, 3f);
     }
 
     void OnLevelWasLoaded()
@@ -129,9 +128,12 @@ public class GameManager : MonoBehaviour {
 		}
     }
 
-	public void ResetScene()
-	{
-        CalmGhosts();
+	public void ResetScene() {
+		if (lives == 0) {
+			SceneManager.LoadScene(NextLevel);
+			return;
+		}
+		CalmGhosts();
 
 		pacman.transform.position = new Vector3(15f, 11f, 0f);
 		blinky.transform.position = new Vector3(15f, 20f, 0f);

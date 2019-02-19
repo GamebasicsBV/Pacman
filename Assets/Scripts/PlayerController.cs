@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,18 +64,8 @@ public class PlayerController : MonoBehaviour
         GetComponent<Animator>().SetBool("Die", false);
         _deadPlaying = false;
 
-        if (GameManager.lives <= 0)
-        {
-            Debug.Log("Treshold for High Score: " + SM.LowestHigh());
-            if (GameManager.score >= SM.LowestHigh())
-                GUINav.getScoresMenu();
-            else
-                GUINav.H_ShowGameOverScreen();
-        }
-
-        else
-            GM.ResetScene();
-    }
+		GM.ResetScene();
+	}
 
     void Animate()
     {
