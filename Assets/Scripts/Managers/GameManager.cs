@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEditor.Animations;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using Assets.Scripts;
@@ -22,11 +20,11 @@ public class GameManager : MonoBehaviour {
     private GameObject inky;
     private GameObject clyde;
     private GameGUINavigation gui;
-    public AnimatorController PacmanAnimatorController;
-    public AnimatorController PinkyAnimatorController;
-    public AnimatorController InkyAnimatorController;
-    public AnimatorController BlinkyAnimatorController;
-    public AnimatorController ClydeAnimatorController;
+    public RuntimeAnimatorController PacmanAnimatorController;
+    public RuntimeAnimatorController PinkyAnimatorController;
+    public RuntimeAnimatorController InkyAnimatorController;
+    public RuntimeAnimatorController BlinkyAnimatorController;
+    public RuntimeAnimatorController ClydeAnimatorController;
 
     public GameObject Powerup;
     public SpawnPoint[] PowerupSpawnPoints;
@@ -133,7 +131,7 @@ public class GameManager : MonoBehaviour {
 			_timeToCameraBackgroundFlash = Time.time + 1;
 		}
 
-        if (Level == 2 && PowerupTimer <= Time.time && PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
+        if (Level >= 2 && PowerupTimer <= Time.time && PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
 	    {
 	        PowerupTimer = Time.time + PowerupSpawnTime;
             SpawnPowerup();
@@ -159,6 +157,9 @@ public class GameManager : MonoBehaviour {
 		inky.GetComponent<GhostMove>().InitializeGhost();
 		clyde.GetComponent<GhostMove>().InitializeGhost();
 
+        foreach (var spawnedPowerup in PowerupSpawnPoints.Where(x => x.SpawnedObject != null).Select(x => x.SpawnedObject).ToArray())
+            Destroy(spawnedPowerup.gameObject);
+
         gameState = GameState.Init;  
         gui.H_ShowReadyScreen();
 	}
@@ -181,7 +182,7 @@ public class GameManager : MonoBehaviour {
     public void FlipAnimator()
     {
         isAnimatorFlipped = true;
-        AnimatorController[] animators = { BlinkyAnimatorController, PinkyAnimatorController, InkyAnimatorController, ClydeAnimatorController };
+        RuntimeAnimatorController[] animators = { BlinkyAnimatorController, PinkyAnimatorController, InkyAnimatorController, ClydeAnimatorController };
 
         pacman.GetComponent<Animator>().runtimeAnimatorController = animators[new System.Random().Next(0, 4)];
         blinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;

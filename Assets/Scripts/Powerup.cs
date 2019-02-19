@@ -20,12 +20,10 @@ public class Powerup : MonoBehaviour {
     {
         if (col.name == "pacman" && !GameManager.isAnimatorFlipped)
         {
-            //    if (new System.Random().Next(0, 2) < 1)
-            //        gm.ScareGhosts();
-            //    else
-            //        gm.FlipAnimator();
-
-            gm.InverseControls();
+            if (gm.Level == 2)
+                gm.InverseControls();
+            if (gm.Level == 3)
+                gm.FlipAnimator();
 
             Destroy(gameObject);
         }
