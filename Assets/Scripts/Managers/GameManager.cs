@@ -2,13 +2,15 @@
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using Assets.Scripts;
 
 public class GameManager : MonoBehaviour {
 
     //--------------------------------------------------------
     // Game variables
 
-    public static int Level = 0;
+    public int Level = 0;
     public static int lives = 3;
 
 	public enum GameState { Init, Game, Dead, Scores }
@@ -27,7 +29,10 @@ public class GameManager : MonoBehaviour {
     public AnimatorController ClydeAnimatorController;
 
     public GameObject Powerup;
-    public Transform[] PowerupSpawnPoints;
+    public SpawnPoint[] PowerupSpawnPoints;
+    private float PowerupSpawnTime = 3f;
+    private float PowerupTimer;
+    private float PowerupMax = 3;
 
     public static bool scared;
     public static bool isAnimatorFlipped = false;
@@ -83,6 +88,8 @@ public class GameManager : MonoBehaviour {
 	void Start () 
 	{
 		gameState = GameState.Init;
+
+	    PowerupTimer = Time.time + PowerupSpawnTime;
     }
 
     void OnLevelWasLoaded()
@@ -93,13 +100,12 @@ public class GameManager : MonoBehaviour {
         AssignGhosts();
         ResetVariables();
 
-
         // Adjust Ghost variables!
-        clyde.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
-        blinky.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
-        pinky.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
-        inky.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
-        pacman.GetComponent<PlayerController>().speed += Level*SpeedPerLevel/2;
+        //clyde.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
+        //blinky.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
+        //pinky.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
+        //inky.GetComponent<GhostMove>().speed += Level * SpeedPerLevel;
+        //pacman.GetComponent<PlayerController>().speed += Level*SpeedPerLevel/2;
     }
 
     private void ResetVariables()
@@ -126,11 +132,17 @@ public class GameManager : MonoBehaviour {
 			camera.backgroundColor = colors[new System.Random().Next(colors.Length)];
 			_timeToCameraBackgroundFlash = Time.time + 1;
 		}
+
+        if (Level == 2 && PowerupTimer <= Time.time && PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
+	    {
+	        PowerupTimer = Time.time + PowerupSpawnTime;
+            SpawnPowerup();
+	    }
     }
 
 	public void ResetScene() {
 		if (lives == 0) {
-			SceneManager.LoadScene(NextLevel);
+			LoadNextLevel();
 			return;
 		}
 		CalmGhosts();
@@ -149,8 +161,12 @@ public class GameManager : MonoBehaviour {
 
         gameState = GameState.Init;  
         gui.H_ShowReadyScreen();
-
 	}
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(NextLevel);
+    }
 
 	public void ToggleScare()
 	{
@@ -242,18 +258,19 @@ public class GameManager : MonoBehaviour {
 
     public static void DestroySelf()
     {
-
         score = 0;
-        Level = 0;
+        //Level = 0;
         lives = 3;
         Destroy(GameObject.Find("Game Manager"));
     }
 
     public void SpawnPowerup()
     {
-        var spawnPoint = PowerupSpawnPoints[new System.Random().Next(0, PowerupSpawnPoints.Length)];
+        var emptySpawnPoints = PowerupSpawnPoints.Where(x => x.SpawnedObject == null).ToArray();
+        var spawnPoint = emptySpawnPoints[new System.Random().Next(0, emptySpawnPoints.Length)];
 
-        Instantiate(Powerup, spawnPoint.position, spawnPoint.rotation);
+        var powerup = Instantiate(Powerup, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        spawnPoint.SpawnedObject = powerup;
     }
 
     public void InverseControls()

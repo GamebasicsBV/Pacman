@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Pacdot : MonoBehaviour {
 
@@ -19,8 +20,8 @@ public class Pacdot : MonoBehaviour {
 
 		    if (pacdots.Length == 1)
 		    {
-		        GameObject.FindObjectOfType<GameGUINavigation>().LoadLevel();
-		    }
+		        GameObject.Find("Game Manager").GetComponent<GameManager>().LoadNextLevel();
+            }
 		}
 	}
 }

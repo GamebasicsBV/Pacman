@@ -15,8 +15,8 @@ public class Energizer : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.name == "pacman" && !GameManager.isAnimatorFlipped) {
-			//gm.ScareGhosts();
-			gm.FlipAnimator();
+			gm.ScareGhosts();
+			//gm.FlipAnimator();
 
             Destroy(gameObject);
         }

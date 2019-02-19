@@ -165,7 +165,7 @@ public class GameGUINavigation : MonoBehaviour {
             // take care of game manager
             Destroy(GameObject.Find("Game Manager"));
             GameManager.score = 0;
-            GameManager.Level = 0;
+            //GameManager.Level = 0;
 
             Application.LoadLevel("scores");
             Time.timeScale = 1.0f;
@@ -211,12 +211,6 @@ public class GameGUINavigation : MonoBehaviour {
         else                                StartCoroutine(AddScore(username, highscore));
 	    
 	}
-
-    public void LoadLevel()
-    {
-        GameManager.Level++;
-        Application.LoadLevel("game");
-    }
 
     public void ToggleErrorMsg(string errorMsg)
     {
