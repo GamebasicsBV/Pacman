@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
         Vector2 pos = transform.position;
         direction += new Vector2(direction.x * 0.45f, direction.y * 0.45f);
         RaycastHit2D hit = Physics2D.Linecast(pos + direction, pos);
-        return hit.collider.name == "energizer" || hit.collider.name == "pacdot" || (hit.collider == GetComponent<Collider2D>());
+        return hit.collider.name == "energizer" || hit.collider.name == "pacdot" || hit.collider.name == "powerup" || hit.collider.name == "Powerup(Clone)" || (hit.collider == GetComponent<Collider2D>());
     }
 
     public void ResetDestination()

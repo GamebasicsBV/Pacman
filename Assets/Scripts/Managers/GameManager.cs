@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour {
     public AnimatorController BlinkyAnimatorController;
     public AnimatorController ClydeAnimatorController;
 
+    public GameObject Powerup;
+    public Transform[] PowerupSpawnPoints;
+
     public static bool scared;
     public static bool isAnimatorFlipped = false;
     public bool isCameraFollowingPacman = false;
@@ -79,7 +82,9 @@ public class GameManager : MonoBehaviour {
 	void Start () 
 	{
 		gameState = GameState.Init;
-	}
+
+	    InvokeRepeating("SpawnPowerup", 3f, 3f);
+    }
 
     void OnLevelWasLoaded()
     {
@@ -240,5 +245,12 @@ public class GameManager : MonoBehaviour {
         Level = 0;
         lives = 3;
         Destroy(GameObject.Find("Game Manager"));
+    }
+
+    public void SpawnPowerup()
+    {
+        var spawnPoint = PowerupSpawnPoints[new System.Random().Next(0, PowerupSpawnPoints.Length)];
+
+        Instantiate(Powerup, spawnPoint.position, spawnPoint.rotation);
     }
 }
