@@ -17,15 +17,10 @@ public class GameGUINavigation : MonoBehaviour {
 	public float initialDelay;
 
 	// canvas
-	public Canvas PauseCanvas;
-	public Canvas QuitCanvas;
 	public Canvas ReadyCanvas;
 	public Canvas ScoreCanvas;
     public Canvas ErrorCanvas;
     public Canvas GameOverCanvas;
-	
-	// buttons
-	public Button MenuButton;
 
 	//------------------------------------------------------------------
 	// Function Definitions
@@ -34,26 +29,6 @@ public class GameGUINavigation : MonoBehaviour {
 	void Start () 
 	{
 		StartCoroutine("ShowReadyScreen", initialDelay);
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			// if scores are show, go back to main menu
-			if(GameManager.gameState == GameManager.GameState.Scores)
-				Menu();
-
-			// if in game, toggle pause or quit dialogue
-			else
-			{
-				if(quit == true)
-					ToggleQuit();
-				else
-					TogglePause();
-			}
-		}
 	}
 
 	// public handle to show ready screen coroutine call
@@ -83,69 +58,17 @@ public class GameGUINavigation : MonoBehaviour {
         Debug.Log("Showing GAME OVER Screen");
         GameOverCanvas.enabled = true;
         yield return new WaitForSeconds(2);
-        Menu();
     }
 
 	public void getScoresMenu()
 	{
 		Time.timeScale = 0f;		// stop the animations
 		GameManager.gameState = GameManager.GameState.Scores;
-		MenuButton.enabled = false;
 		ScoreCanvas.enabled = true;
 	}
 
 	//------------------------------------------------------------------
 	// Button functions
-
-	public void TogglePause()
-	{
-		// if paused before key stroke, unpause the game
-		if(_paused)
-		{
-			Time.timeScale = 1;
-			PauseCanvas.enabled = false;
-			_paused = false;
-			MenuButton.enabled = true;
-		}
-		
-		// if not paused before key stroke, pause the game
-		else
-		{
-			PauseCanvas.enabled = true;
-			Time.timeScale = 0.0f;
-			_paused = true;
-			MenuButton.enabled = false;
-		}
-
-
-        Debug.Log("PauseCanvas enabled: " + PauseCanvas.enabled);
-	}
-	
-	public void ToggleQuit()
-	{
-		if(quit)
-        {
-            PauseCanvas.enabled = true;
-            QuitCanvas.enabled = false;
-			quit = false;
-		}
-		
-		else
-        {
-            QuitCanvas.enabled = true;
-			PauseCanvas.enabled = false;
-			quit = true;
-		}
-	}
-
-	public void Menu()
-	{
-		Application.LoadLevel("menu");
-		Time.timeScale = 1.0f;
-
-        // take care of game manager
-	    GameManager.DestroySelf();
-	}
 
     IEnumerator AddScore(string name, int score)
     {
