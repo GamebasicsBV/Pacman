@@ -2,14 +2,14 @@
 
 public class DizzyEffect : MonoBehaviour {
 	public Material Material;
-	public float Duration;
-	public float Heaviness;
-	private bool dizzinessGoing;
+	public float Duration = 0.6f;
+	public float Heaviness = 0.2f;
+	private bool dizzinessGoing = false;
 	private float dizzinnessTimer = 0f;
 	private static DizzyEffect instance;
 
 	public static void StartDoingTheDizzy() {
-		if (instance) {
+		if (instance && instance.Material) {
 			instance.dizzinessGoing = true;
 			instance.dizzinnessTimer = 0f;
 		}
@@ -22,7 +22,7 @@ public class DizzyEffect : MonoBehaviour {
 	void Update() {
 		if (dizzinessGoing) {
 			dizzinnessTimer += Time.deltaTime;
-			Material.SetFloat("_OffsetMultiplier", Heaviness * Mathf.Sin(2 * Mathf.PI * dizzinnessTimer / Duration));
+			Material.SetFloat("_OffsetMultiplier", Heaviness * Mathf.Sin(Mathf.PI * dizzinnessTimer / Duration));
 			if (dizzinnessTimer > Duration) {
 				dizzinessGoing = false;
 				dizzinnessTimer = 0f;
