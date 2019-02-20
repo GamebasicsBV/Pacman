@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour {
 		if(scared && _timeToCalm <= Time.time)
 			CalmGhosts();
 
-	    if (isAnimatorFlipped && _timeToFlipBack <= Time.time)
+        if (isAnimatorFlipped && _timeToFlipBack <= Time.time)
             FlipAnimatorBack();
 
         if (isCameraFollowingPacman)
