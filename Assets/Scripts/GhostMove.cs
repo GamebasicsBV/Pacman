@@ -296,7 +296,7 @@ public class GhostMove : MonoBehaviour {
 		if(other.name == "pacman")
 		{
 			//Destroy(other.gameObject);
-		    if (state == State.Run && !GameManager.isAnimatorFlipped || state != State.Run && GameManager.isAnimatorFlipped)
+		    if (state == State.Run && !_gm.isAnimatorFlipped || state != State.Run && _gm.isAnimatorFlipped)
 		    {
 		        Calm();
 		        InitializeGhost(_startPos);

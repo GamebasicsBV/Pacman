@@ -18,7 +18,7 @@ public class Powerup : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.name == "pacman" && !GameManager.isAnimatorFlipped)
+        if (col.name == "pacman" && !gm.isAnimatorFlipped)
         {
             if (gm.Level == 2)
                 gm.InverseControls();

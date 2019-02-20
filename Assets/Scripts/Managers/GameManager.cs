@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
     private float PowerupMax = 3;
 
     public static bool scared;
-    public static bool isAnimatorFlipped = false;
+    public bool isAnimatorFlipped = false;
     public bool isCameraFollowingPacman = false;
 	public bool isCameraBackgroundGoingFlashy = false;
     public Camera camera;
@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour {
 		gameState = GameState.Init;
 
 	    PowerupTimer = Time.time + PowerupSpawnTime;
+        if (isAnimatorFlipped)
+            FlipAnimator();
     }
 
     void OnLevelWasLoaded()

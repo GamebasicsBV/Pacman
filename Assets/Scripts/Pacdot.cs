@@ -2,12 +2,18 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Pacdot : MonoBehaviour {
+public class Pacdot : MonoBehaviour
+{
+    private GameManager _gm;
 
-	void OnTriggerEnter2D(Collider2D other)
+    void Start()
+    {
+        _gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
+    }
+    void OnTriggerEnter2D(Collider2D other)
 	{
-		if((!GameManager.isAnimatorFlipped && other.name == "pacman") ||
-		   (GameManager.isAnimatorFlipped && (
+		if((!_gm.isAnimatorFlipped && other.name == "pacman") ||
+		   (_gm.isAnimatorFlipped && (
 		        other.name == "pinky" ||
 		        other.name == "clyde" ||
 		        other.name == "blinky" ||
@@ -19,9 +25,7 @@ public class Pacdot : MonoBehaviour {
             Destroy(gameObject);
 
 		    if (pacdots.Length == 1)
-		    {
-		        GameObject.Find("Game Manager").GetComponent<GameManager>().LoadNextLevel();
-            }
+		        _gm.LoadNextLevel();
 		}
 	}
 }
