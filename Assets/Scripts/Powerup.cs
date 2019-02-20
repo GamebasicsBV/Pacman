@@ -21,7 +21,11 @@ public class Powerup : MonoBehaviour {
         if (col.name == "pacman" && !gm.isAnimatorFlipped)
         {
             if (gm.Level == 2)
+            {
                 gm.InverseControls();
+                gm.ToggleMoveableWall();
+            }
+
             if (gm.Level == 3)
                 gm.FlipAnimator();
 

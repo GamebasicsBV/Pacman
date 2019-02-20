@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using Assets.Scripts;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     //--------------------------------------------------------
     // Game variables
@@ -11,8 +12,15 @@ public class GameManager : MonoBehaviour {
     public int Level = 0;
     public int lives = 3;
 
-	public enum GameState { Init, Game, Dead, Scores }
-	public static GameState gameState;
+    public enum GameState
+    {
+        Init,
+        Game,
+        Dead,
+        Scores
+    }
+
+    public static GameState gameState;
 
     private GameObject pacman;
     private GameObject blinky;
@@ -31,6 +39,13 @@ public class GameManager : MonoBehaviour {
     private float PowerupSpawnTime = 3f;
     private float PowerupTimer;
     private float PowerupMax = 3;
+
+    public GameObject MoveableWall;
+    private Vector3 MoveableWallBeginPosition;
+
+    private Vector3 MoveableWallEndPosition => new Vector3(MoveableWallBeginPosition.x - 8f, MoveableWallBeginPosition.y, 0f);
+    private bool shouldMoveWallTowardBegin;
+    private bool shouldMoveWallTowardEnd;
 
     public static bool scared;
     public bool isAnimatorFlipped = false;
@@ -90,7 +105,9 @@ public class GameManager : MonoBehaviour {
 	    PowerupTimer = Time.time + PowerupSpawnTime;
         if (isAnimatorFlipped)
             FlipAnimator();
-    }
+
+	    MoveableWallBeginPosition = MoveableWall.transform.position;
+	}
 
     void OnLevelWasLoaded()
     {
@@ -137,6 +154,22 @@ public class GameManager : MonoBehaviour {
 	    {
 	        PowerupTimer = Time.time + PowerupSpawnTime;
             SpawnPowerup();
+	    }
+
+	    if (Level == 2) {
+	        if (shouldMoveWallTowardEnd)
+	        {
+	            MoveableWall.transform.position = Vector3.MoveTowards(MoveableWall.transform.position, MoveableWallEndPosition, 0.3f);
+	            if (Vector3.Distance(MoveableWall.transform.position, MoveableWallEndPosition) < 0.001f)
+	                shouldMoveWallTowardEnd = false;
+	        }
+
+	        if (shouldMoveWallTowardBegin)
+	        {
+	            MoveableWall.transform.position = Vector3.MoveTowards(MoveableWall.transform.position, MoveableWallBeginPosition, 0.3f);
+	            if (Vector3.Distance(MoveableWall.transform.position, MoveableWallBeginPosition) < 0.001f)
+	                shouldMoveWallTowardBegin = false;
+	        }
 	    }
     }
 
@@ -287,5 +320,13 @@ public class GameManager : MonoBehaviour {
             playerController._isInversed = inversionEnabled.Value;
         else
             playerController._isInversed = !playerController._isInversed;
+    }
+
+    public void ToggleMoveableWall()
+    {
+        if (MoveableWall.transform.position == MoveableWallBeginPosition)
+            shouldMoveWallTowardEnd = true;
+        else
+            shouldMoveWallTowardBegin = true;
     }
 }
