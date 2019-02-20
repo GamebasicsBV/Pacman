@@ -191,6 +191,7 @@ public class AI : MonoBehaviour {
 			targetTile = tiles[manager.Index((int)targetPos.x, (int)targetPos.y)];
 			break;
 		case "clyde":
+        case "clyde_black":
 			targetPos = new Vector3 (target.position.x+0.499f, target.position.y+0.499f);
 			targetTile = tiles[manager.Index((int)targetPos.x, (int)targetPos.y)];
 			if(manager.distance(targetTile, currentTile) < 9)

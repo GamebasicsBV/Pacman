@@ -16,7 +16,8 @@ public class Pacdot : MonoBehaviour
 		   (_gm.isAnimatorFlipped && (
 		        other.name == "pinky" ||
 		        other.name == "clyde" ||
-		        other.name == "blinky" ||
+		        other.name == "clyde_black" ||
+                other.name == "blinky" ||
 		        other.name == "inky"
             )))
 		{

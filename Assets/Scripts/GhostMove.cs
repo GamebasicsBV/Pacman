@@ -169,6 +169,7 @@ public class GhostMove : MonoBehaviour {
 22 5";
             break;
         case "clyde":
+        case "clyde_black":
             data = @"12.5 17
 14 17
 14 20
@@ -246,7 +247,7 @@ public class GhostMove : MonoBehaviour {
             Vector3 pos = transform.position;
 
             // inky and clyde start going down and then up
-            if (transform.name == "inky" || transform.name == "clyde")
+            if (transform.name == "inky" || transform.name == "clyde" || transform.name == "clyde_black")
             {
                 waypoints.Enqueue(new Vector3(pos.x, pos.y - 0.5f, 0f));
                 waypoints.Enqueue(new Vector3(pos.x, pos.y + 0.5f, 0f));
@@ -275,6 +276,7 @@ public class GhostMove : MonoBehaviour {
                 return new Vector3(16.5f, 17f, 0f);
 
             case "clyde":
+            case "clyde_black":
                 return new Vector3(12.5f, 17f, 0f);
         }
 

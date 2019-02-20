@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public GameObject MoveableWall;
     private Vector3 MoveableWallBeginPosition;
 
-    private Vector3 MoveableWallEndPosition => new Vector3(MoveableWallBeginPosition.x - 8f, MoveableWallBeginPosition.y, 0f);
+    private Vector3 MoveableWallEndPosition => new Vector3(MoveableWallBeginPosition.x - 9f, MoveableWallBeginPosition.y, 0f);
     private bool shouldMoveWallTowardBegin;
     private bool shouldMoveWallTowardEnd;
 
@@ -106,7 +106,8 @@ public class GameManager : MonoBehaviour
         if (isAnimatorFlipped)
             FlipAnimator();
 
-	    MoveableWallBeginPosition = MoveableWall.transform.position;
+        if (MoveableWall != null)
+	        MoveableWallBeginPosition = MoveableWall.transform.position;
 	}
 
     void OnLevelWasLoaded()
@@ -150,13 +151,14 @@ public class GameManager : MonoBehaviour
 			_timeToCameraBackgroundFlash = Time.time + 1;
 		}
 
+        // Powerups vanaf level 2.
         if (Level >= 2 && PowerupTimer <= Time.time && PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
 	    {
 	        PowerupTimer = Time.time + PowerupSpawnTime;
             SpawnPowerup();
 	    }
 
-	    if (Level == 2) {
+	    if (Level == 2 && MoveableWall != null) {
 	        if (shouldMoveWallTowardEnd)
 	        {
 	            MoveableWall.transform.position = Vector3.MoveTowards(MoveableWall.transform.position, MoveableWallEndPosition, 0.3f);
@@ -270,7 +272,7 @@ public class GameManager : MonoBehaviour
     void AssignGhosts()
     {
         // find and assign ghosts
-        clyde = GameObject.Find("clyde");
+        clyde = GameObject.Find("clyde") ?? GameObject.Find("clyde_black");
         pinky = GameObject.Find("pinky");
         inky = GameObject.Find("inky");
         blinky = GameObject.Find("blinky");
