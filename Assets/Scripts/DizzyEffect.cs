@@ -28,6 +28,10 @@ public class DizzyEffect : MonoBehaviour {
 				dizzinnessTimer = 0f;
 			}
 		}
+
+		if (Input.GetKeyDown(KeyCode.O)) {
+			DizzyEffect.StartDoingTheDizzy();
+		}
 	}
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination) {

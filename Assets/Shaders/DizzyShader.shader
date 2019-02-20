@@ -1,8 +1,8 @@
-﻿Shader "Hidden/SampleImageEffect" {
+﻿Shader "Hidden/DizzyShader" {
 	Properties {
 		_MainTex("Screen Texture", 2D) = "white" {}
 		_MyNormalMap("Normal map", 2D) = "bump" {}
-		_OffsetMultiplier("Offset Multiplier", Float) = 0.0
+		_OffsetMultiplier("Offset Multiplier", Float) = 0.1
 	}
 	SubShader{
 		Pass {
