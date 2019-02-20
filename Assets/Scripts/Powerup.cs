@@ -27,12 +27,12 @@ public class Powerup : MonoBehaviour {
             {
                 gm.InverseControls();
                 gm.ToggleMoveableWall();
-				Level2PickupEffect?.Evoke();
+				Level2PickupEffect?.Invoke();
             }
 
 			if (gm.Level == 3) {
 				gm.FlipAnimator();
-				Level3PickupEffect?.Evoke();
+				Level3PickupEffect?.Invoke();
 			}
 
             Destroy(gameObject);

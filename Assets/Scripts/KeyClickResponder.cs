@@ -7,7 +7,7 @@ public class KeyClickResponder : MonoBehaviour
 
     void Update() {
 		if (Input.GetKeyDown(KeyToClick)) {
-			ActionToPerform.Evoke();
+			ActionToPerform.Invoke();
 		}
     }
 }
