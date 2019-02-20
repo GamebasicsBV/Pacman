@@ -315,6 +315,7 @@ public class GameManager : MonoBehaviour
 
     public void InverseControls(bool? inversionEnabled = null)
     {
+		DizzyEffect.StartDoingTheDizzy();
         var playerController = pacman.GetComponent<PlayerController>();
         if (inversionEnabled.HasValue)
             playerController._isInversed = inversionEnabled.Value;
