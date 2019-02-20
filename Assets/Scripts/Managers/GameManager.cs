@@ -182,8 +182,12 @@ public class GameManager : MonoBehaviour
 		}
 		CalmGhosts();
 
-		pacman.transform.position = new Vector3(15f, 11f, 0f);
-		blinky.transform.position = new Vector3(15f, 20f, 0f);
+	    if (Level == 4)
+	        pacman.transform.position = new Vector3(13f, 30f, 0f);
+        else
+	        pacman.transform.position = new Vector3(15f, 11f, 0f);
+
+        blinky.transform.position = new Vector3(15f, 20f, 0f);
 		pinky.transform.position = new Vector3(14.5f, 17f, 0f);
 		inky.transform.position = new Vector3(16.5f, 17f, 0f);
 		clyde.transform.position = new Vector3(12.5f, 17f, 0f);
