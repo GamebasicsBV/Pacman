@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using Assets.Scripts;
@@ -33,6 +34,12 @@ public class GameManager : MonoBehaviour
     public RuntimeAnimatorController InkyAnimatorController;
     public RuntimeAnimatorController BlinkyAnimatorController;
     public RuntimeAnimatorController ClydeAnimatorController;
+
+    public AudioSource ChompSound;
+    public AudioSource DeathSound;
+    public AudioSource EatFruitSound;
+    public AudioSource EatGhostSound;
+    public AudioSource EnergizeSound;
 
     public GameObject Powerup;
     public SpawnPoint[] PowerupSpawnPoints;
@@ -336,4 +343,46 @@ public class GameManager : MonoBehaviour
         else
             shouldMoveWallTowardBegin = true;
     }
+
+    public void PlaySound(Sound sound)
+    {
+        var source = GetAudioSource(sound);
+        if (source != null && !source.isPlaying)
+            source.Play();
+    }
+
+    private AudioSource GetAudioSource(Sound sound)
+    {
+        AudioSource source;
+        switch (sound)
+        {
+            case Sound.Chomp:
+                source = ChompSound;
+                break;
+            case Sound.Death:
+                source = DeathSound;
+                break;
+            case Sound.EatFruit:
+                source = EatFruitSound;
+                break;
+            case Sound.EatGhost:
+                source = EatGhostSound;
+                break;
+            case Sound.Energize:
+                source = EnergizeSound;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(sound), sound, null);
+        }
+
+        return source;
+    }
+}
+
+public enum Sound {
+    Chomp,
+    Death,
+    EatFruit,
+    EatGhost,
+    Energize
 }

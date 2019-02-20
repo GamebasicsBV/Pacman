@@ -300,6 +300,7 @@ public class GhostMove : MonoBehaviour {
 			//Destroy(other.gameObject);
 		    if (state == State.Run && !_gm.isAnimatorFlipped || state != State.Run && _gm.isAnimatorFlipped)
 		    {
+                _gm.PlaySound(Sound.EatGhost);
 		        Calm();
 		        InitializeGhost(_startPos);
                 pacman.UpdateScore();

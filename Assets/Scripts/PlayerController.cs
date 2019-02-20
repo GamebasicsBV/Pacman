@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator PlayDeadAnimation()
     {
         _deadPlaying = true;
+        GM.PlaySound(Sound.Death);
+
         GetComponent<Animator>().SetBool("Die", true);
         yield return new WaitForSeconds(1);
         GetComponent<Animator>().SetBool("Die", false);
