@@ -15,18 +15,18 @@ public class ColorDistortEffect : MonoBehaviour
 	// Start is called before the first frame update
 	void Start() {
 		instance = this;
-		Material.SetVector("_XOffsets", new Vector4(-1, 0, 1, 0));
-		Material.SetVector("_YOffsets", new Vector4(1, 0, -1, 0));
+		Material?.SetVector("_XOffsets", new Vector4(-1, 0, 1, 0));
+		Material?.SetVector("_YOffsets", new Vector4(1, 0, -1, 0));
 	}
 
     // Update is called once per frame
     void Update() {
 		if (distortCountdownTimer > 0) {
-			Material.SetFloat("_OffsetMultiplier", 0.02f);
+			Material?.SetFloat("_OffsetMultiplier", 0.02f);
 			distortCountdownTimer -= Time.deltaTime;
 		}
 		else {
-			Material.SetFloat("_OffsetMultiplier", 0f);
+			Material?.SetFloat("_OffsetMultiplier", 0f);
 		}
 
 		if (Input.GetKeyDown(KeyCode.P)) {

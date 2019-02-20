@@ -7,6 +7,9 @@ public class Powerup : MonoBehaviour {
 
     public Sprite[] sprites;
 
+	public IActionSequenceAction Level2PickupEffect;
+	public IActionSequenceAction Level3PickupEffect;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -24,10 +27,13 @@ public class Powerup : MonoBehaviour {
             {
                 gm.InverseControls();
                 gm.ToggleMoveableWall();
+				Level2PickupEffect?.Evoke();
             }
 
-            if (gm.Level == 3)
-                gm.FlipAnimator();
+			if (gm.Level == 3) {
+				gm.FlipAnimator();
+				Level3PickupEffect?.Evoke();
+			}
 
             Destroy(gameObject);
         }
