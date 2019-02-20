@@ -143,7 +143,7 @@ public class GhostMove : MonoBehaviour {
 22 26";
             break;
         case "pinky":
-            data = @"14.5 17
+            data = @"14 17
 14 17
 14 20
 7 20
@@ -154,7 +154,7 @@ public class GhostMove : MonoBehaviour {
 2 26";
             break;
         case "inky":
-            data = @"16.5 17
+            data = @"16 17
 15 17
 15 20
 22 20
@@ -170,7 +170,7 @@ public class GhostMove : MonoBehaviour {
             break;
         case "clyde":
         case "clyde_black":
-            data = @"12.5 17
+            data = @"12 17
 14 17
 14 20
 7 20
@@ -406,6 +406,7 @@ public class GhostMove : MonoBehaviour {
 	void MoveToWaypoint(bool loop = false)
 	{
 		waypoint = waypoints.Peek();		// get the waypoint (CHECK NULL?)
+
         if (Vector3.Distance(transform.position, waypoint) > 0.000000000001)	// if its not reached
 		{									                        // move towards it
 			_direction = Vector3.Normalize(waypoint - transform.position);	// dont screw up waypoint by calling public setter
