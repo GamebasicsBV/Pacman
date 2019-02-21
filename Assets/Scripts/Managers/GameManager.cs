@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviour
 	{
 	    PacmanHasMoved = false;
 
-		if (lives == 0 && Level != 5) {
+		if (lives == 0 && Level == 1) {
 			LoadNextLevel();
 			return;
 		}
