@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     Vector2 _dest = Vector2.zero;
     Vector2 _dir = Vector2.zero;
     Vector2 _nextDir = Vector2.zero;
+	public bool NotARealLevel = false;
 
     [Serializable]
     public class PointSprites
@@ -24,36 +25,42 @@ public class PlayerController : MonoBehaviour
     // script handles
     private GameGUINavigation GUINav;
     private GameManager GM;
-    private ScoreManager SM;
 
     private bool _deadPlaying = false;
 
     // Use this for initialization
     void Start()
     {
-        GM = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        SM = GameObject.Find("Game Manager").GetComponent<ScoreManager>();
-        GUINav = GameObject.Find("UI Manager").GetComponent<GameGUINavigation>();
-        _dest = transform.position;
+		if (!NotARealLevel) {
+			GM = GameObject.Find("Game Manager").GetComponent<GameManager>();
+			GUINav = GameObject.Find("UI Manager").GetComponent<GameGUINavigation>();
+			_dest = transform.position;
+		}
+		else {
+			_dest = transform.position;
+		}
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        switch (GameManager.gameState)
-        {
-            case GameManager.GameState.Game:
-                ReadInputAndMove();
-                Animate();
-                break;
+		if (!NotARealLevel) {
+			switch (GameManager.gameState) {
+				case GameManager.GameState.Game:
+					ReadInputAndMove();
+					Animate();
+					break;
 
-            case GameManager.GameState.Dead:
-                if (!_deadPlaying)
-                    StartCoroutine("PlayDeadAnimation");
-                break;
-        }
-
-
+				case GameManager.GameState.Dead:
+					if (!_deadPlaying)
+						StartCoroutine("PlayDeadAnimation");
+					break;
+			}
+		}
+		else {
+			ReadInputAndMove();
+			Animate();
+		}
     }
 
     IEnumerator PlayDeadAnimation()
