@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public RuntimeAnimatorController BlinkyAnimatorController;
     public RuntimeAnimatorController ClydeAnimatorController;
 
+    public AudioSource BackgroundSound;
     public AudioSource ChompSound;
     public AudioSource DeathSound;
     public AudioSource EatFruitSound;
@@ -119,6 +120,8 @@ public class GameManager : MonoBehaviour
 
         if (MoveableWall != null)
 	        MoveableWallBeginPosition = MoveableWall.transform.position;
+
+        PlaySound(Sound.Background);
 	}
 
     void OnLevelWasLoaded()
@@ -404,6 +407,9 @@ public class GameManager : MonoBehaviour
         AudioSource source;
         switch (sound)
         {
+            case Sound.Background:
+                source = BackgroundSound;
+                break;
             case Sound.Chomp:
                 source = ChompSound;
                 break;
@@ -428,6 +434,7 @@ public class GameManager : MonoBehaviour
 }
 
 public enum Sound {
+    Background,
     Chomp,
     Death,
     EatFruit,
