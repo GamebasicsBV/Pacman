@@ -306,19 +306,21 @@ public class GhostMove : MonoBehaviour {
 		if(other.name == "pacman")
 		{
 			//Destroy(other.gameObject);
-		    if (state == State.Run && !_gm.isAnimatorFlipped || state != State.Run && _gm.isAnimatorFlipped)
+		    if (_gm.Level == 5 && !_gm.PacmanHasMoved)
+		    {
+                _gm.LoadNextLevel();
+		    }
+		    else if (state == State.Run && !_gm.isAnimatorFlipped || state != State.Run && _gm.isAnimatorFlipped)
 		    {
                 _gm.PlaySound(Sound.EatGhost);
 		        Calm();
 		        InitializeGhost(_startPos);
                 pacman.UpdateScore();
 		    }
-		       
 		    else
 		    {
 		        _gm.LoseLife();
 		    }
-
 		}
 	}
 

@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     private GameObject pinky;
     private GameObject inky;
     private GameObject clyde;
+    public bool PacmanHasMoved = false;
     private GameGUINavigation gui;
     public RuntimeAnimatorController PacmanAnimatorController;
     public RuntimeAnimatorController PinkyAnimatorController;

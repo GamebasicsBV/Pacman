@@ -115,6 +115,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Vertical") > 0) _nextDir = _isInversed ? -Vector2.up : Vector2.up;
         if (Input.GetAxis("Vertical") < 0) _nextDir = _isInversed ? Vector2.up : -Vector2.up;
 
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            GM.PacmanHasMoved = true;
+
         // if pacman is in the center of a tile
         if (Vector2.Distance(_dest, transform.position) < 0.00001f)
         {
