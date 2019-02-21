@@ -3,7 +3,14 @@ using System;
 
 public class ActionSequence : IActionSequenceAction {
 
+	public bool RunOnStart = false;
 	public IActionSequenceAction[] Actions;
+
+	private void Start() {
+		if (RunOnStart) {
+			Invoke();
+		}
+	}
 
 	override public void Invoke() {
 		Actions[0].InvokeAndDoOnDone(() => { OnActionDone(0); });
