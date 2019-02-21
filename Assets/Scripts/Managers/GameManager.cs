@@ -225,6 +225,9 @@ public class GameManager : MonoBehaviour
 	    foreach (var spawnedPowerup in PowerupSpawnPoints.Where(x => x != null && x.SpawnedObject != null).Select(x => x.SpawnedObject).ToArray())
 	        Destroy(spawnedPowerup.gameObject);
 
+        // Zet de muur terug op z'n plek.
+	    MoveableWall.transform.position = MoveableWallBeginPosition;
+
         InverseControls(false);
 	    FlipAnimatorBack();
 
