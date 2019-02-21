@@ -385,6 +385,12 @@ public class GameManager : MonoBehaviour
             playerController._isInversed = inversionEnabled.Value;
         else
             playerController._isInversed = !playerController._isInversed;
+		if (playerController._isInversed) {
+			MoveInvertEffect.StartDoingTheEffect();
+		}
+		else {
+			MoveInvertEffect.StopDoingTheEffect();
+		}
     }
 
     public void ToggleMoveableWall()
