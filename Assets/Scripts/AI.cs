@@ -199,10 +199,15 @@ public class AI : MonoBehaviour {
 			break;
 		default:
 			targetTile = null;
-			Debug.Log ("TARGET TILE NOT ASSIGNED");
+			//Debug.Log ("TARGET TILE NOT ASSIGNED");
 			break;
-		
 		}
+
+	    if (name.StartsWith("ghost"))
+	    {
+	        targetPos = new Vector3(target.position.x + 0.499f, target.position.y + 0.499f);
+	        targetTile = tiles[manager.Index((int)targetPos.x, (int)targetPos.y)];
+        }
 		return targetTile;
 	}
 }

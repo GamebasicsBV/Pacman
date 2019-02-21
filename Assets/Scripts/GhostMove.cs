@@ -184,7 +184,9 @@ public class GhostMove : MonoBehaviour {
 10 5
 10 8";
             break;
-        
+        case "ghost":
+            data = "";
+                break;
         }
 
         //-------------------------------------------------
@@ -194,7 +196,7 @@ public class GhostMove : MonoBehaviour {
         waypoints = new Queue<Vector3>();
         Vector3 wp;
 
-        if (st == State.Init)
+        if (st == State.Init && !gameObject.name.StartsWith("ghost"))
         {
             using (StringReader reader = new StringReader(data))
             {
@@ -213,7 +215,7 @@ public class GhostMove : MonoBehaviour {
             }
         }
 
-        if (st == State.Scatter)
+        if (st == State.Scatter && !gameObject.name.StartsWith("ghost"))
         {
             // skip until empty line is reached, read coordinates afterwards
             bool scatterWps = false;	// Scatter waypoints
@@ -253,10 +255,16 @@ public class GhostMove : MonoBehaviour {
                 waypoints.Enqueue(new Vector3(pos.x, pos.y + 0.5f, 0f));
             }
             // while pinky start going up and then down
-            else
+            else if (transform.name == "pinky")
             {
                 waypoints.Enqueue(new Vector3(pos.x, pos.y + 0.5f, 0f));
                 waypoints.Enqueue(new Vector3(pos.x, pos.y - 0.5f, 0f));
+            }
+            // patrol only a little
+            else if (transform.name.StartsWith("ghost"))
+            {
+                waypoints.Enqueue(new Vector3(pos.x, pos.y + 0.1f, 0f));
+                waypoints.Enqueue(new Vector3(pos.x, pos.y - 0.1f, 0f));
             }
         }
 
@@ -406,6 +414,9 @@ public class GhostMove : MonoBehaviour {
 	// Utility functions
 	void MoveToWaypoint(bool loop = false)
 	{
+        if (waypoints.Count == 0)
+            return;
+	    
 		waypoint = waypoints.Peek();		// get the waypoint (CHECK NULL?)
 
         if (Vector3.Distance(transform.position, waypoint) > 0.000000000001)	// if its not reached
