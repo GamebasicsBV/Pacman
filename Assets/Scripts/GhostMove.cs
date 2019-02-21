@@ -308,7 +308,13 @@ public class GhostMove : MonoBehaviour {
 			//Destroy(other.gameObject);
 		    if (_gm.Level == 5 && !_gm.PacmanHasMoved)
 		    {
-                _gm.LoadNextLevel();
+		        _gm.PlaySound(Sound.EatGhost);
+		        Destroy(gameObject);
+                pacman.UpdateScore();
+		        _gm.NumberOfGhostKilledInLevel5++;
+
+                if (_gm.NumberOfGhostKilledInLevel5 >= _gm.NumberOfGhostInLevel5)
+                    _gm.LoadNextLevel();
 		    }
 		    else if (state == State.Run && !_gm.isAnimatorFlipped || state != State.Run && _gm.isAnimatorFlipped)
 		    {
