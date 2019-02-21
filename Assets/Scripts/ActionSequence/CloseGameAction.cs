@@ -4,6 +4,7 @@ using System;
 public class CloseGameAction : IActionSequenceAction {
 
 	override public void Invoke() {
+        Debug.Log("Exit the game!");
 		Application.Quit();
 	}
 
