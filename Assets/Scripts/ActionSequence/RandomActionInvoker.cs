@@ -1,10 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 public class RandomActionInvoker : MonoBehaviour
 {
+	private static System.Random _Random;
+	private static System.Random Random {
+		get {
+			if (_Random == null) {
+				_Random = new System.Random();
+			}
+			return _Random;
+		}
+	}
+
 	public int MinTimeBetweenRandomInvokes = 10;
 	public int MaxTimeBetweenRandomInvokes = 20;
 	private float timeToNextRandomInvoke;
@@ -12,7 +20,7 @@ public class RandomActionInvoker : MonoBehaviour
 	
     void Start()
     {
-		timeToNextRandomInvoke = MinTimeBetweenRandomInvokes + (new System.Random().Next(MaxTimeBetweenRandomInvokes - MinTimeBetweenRandomInvokes));
+		timeToNextRandomInvoke = MinTimeBetweenRandomInvokes + Random.Next(MaxTimeBetweenRandomInvokes - MinTimeBetweenRandomInvokes);
     }
 	
     void Update()
@@ -20,7 +28,7 @@ public class RandomActionInvoker : MonoBehaviour
 		timeToNextRandomInvoke -= Time.deltaTime;
 		Debug.Log(timeToNextRandomInvoke);
 		if (timeToNextRandomInvoke < 0) {
-			timeToNextRandomInvoke = MinTimeBetweenRandomInvokes + (new System.Random().Next(MaxTimeBetweenRandomInvokes - MinTimeBetweenRandomInvokes));
+			timeToNextRandomInvoke = MinTimeBetweenRandomInvokes + Random.Next(MaxTimeBetweenRandomInvokes - MinTimeBetweenRandomInvokes);
 			Action.Invoke();
 		}
     }
