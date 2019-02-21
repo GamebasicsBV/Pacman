@@ -189,7 +189,10 @@ public class GameManager : MonoBehaviour
 	    }
     }
 
-	public void ResetScene() {
+	public void ResetScene()
+	{
+	    PacmanHasMoved = false;
+
 		if (lives == 0 && Level != 5) {
 			LoadNextLevel();
 			return;

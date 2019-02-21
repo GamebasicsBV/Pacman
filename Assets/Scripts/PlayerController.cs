@@ -99,6 +99,14 @@ public class PlayerController : MonoBehaviour
             _dest = new Vector2(13f, 30f);
         else
             _dest = new Vector2(15f, 11f);
+
+        // Don't keep walking if you died in level 5.
+        if (GM.Level == 5)
+        {
+            _dir = Vector2.zero;
+            _nextDir = Vector2.zero;
+        }
+
         GetComponent<Animator>().SetFloat("DirX", 1);
         GetComponent<Animator>().SetFloat("DirY", 0);
     }
