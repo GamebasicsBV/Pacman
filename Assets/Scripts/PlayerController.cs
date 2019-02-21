@@ -95,17 +95,18 @@ public class PlayerController : MonoBehaviour
 
     public void ResetDestination()
     {
-        if (GM.Level == 4)
-            _dest = new Vector2(13f, 30f);
-        else
-            _dest = new Vector2(15f, 11f);
+		if (GM) {
+			if (GM.Level == 4)
+				_dest = new Vector2(13f, 30f);
+			else
+				_dest = new Vector2(15f, 11f);
 
-        // Don't keep walking if you died in level 5.
-        if (GM.Level == 5)
-        {
-            _dir = Vector2.zero;
-            _nextDir = Vector2.zero;
-        }
+			// Don't keep walking if you died in level 5.
+			if (GM.Level == 5) {
+				_dir = Vector2.zero;
+				_nextDir = Vector2.zero;
+			}
+		}
 
         GetComponent<Animator>().SetFloat("DirX", 1);
         GetComponent<Animator>().SetFloat("DirY", 0);
@@ -123,8 +124,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Vertical") > 0) _nextDir = _isInversed ? -Vector2.up : Vector2.up;
         if (Input.GetAxis("Vertical") < 0) _nextDir = _isInversed ? Vector2.up : -Vector2.up;
 
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-            GM.PacmanHasMoved = true;
+		if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && GM) {
+			GM.PacmanHasMoved = true;
+		}
 
         // if pacman is in the center of a tile
         if (Vector2.Distance(_dest, transform.position) < 0.00001f)
