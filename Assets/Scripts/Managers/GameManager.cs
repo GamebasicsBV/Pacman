@@ -206,6 +206,13 @@ public class GameManager : MonoBehaviour
 			LoadNextLevel();
 			return;
 		}
+
+	    if (lives == 0 && Level == 5)
+	    {
+	        NextLevel = "level_5_text";
+            LoadNextLevel();
+	        return;
+	    }
 		CalmGhosts();
 
 	    if (pacman != null)
