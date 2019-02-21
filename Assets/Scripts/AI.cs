@@ -169,10 +169,12 @@ public class AI : MonoBehaviour {
 		switch(name)
 		{
 		case "blinky":	// target = pacman
+        case "blinky_black":
 			targetPos = new Vector3 (target.position.x+0.499f, target.position.y+0.499f);
 			targetTile = tiles[manager.Index((int)targetPos.x, (int)targetPos.y)];
 			break;
-		case "pinky":	// target = pacman + 4*pacman's direction (4 steps ahead of pacman)
+		case "pinky":   // target = pacman + 4*pacman's direction (4 steps ahead of pacman)
+        case "pinky_black":
 			dir = target.GetComponent<PlayerController>().getDir();
 			targetPos = new Vector3 (target.position.x+0.499f, target.position.y+0.499f) + 4*dir;
 
@@ -183,10 +185,14 @@ public class AI : MonoBehaviour {
 
 			targetTile = tiles[manager.Index((int)targetPos.x, (int)targetPos.y)];
 			break;
-		case "inky":	// target = ambushVector(pacman+2 - blinky) added to pacman+2
+		case "inky":    // target = ambushVector(pacman+2 - blinky) added to pacman+2
+        case "inky_black":
 			dir = target.GetComponent<PlayerController>().getDir();
-			Vector3 blinkyPos = GameObject.Find ("blinky").transform.position;
-			Vector3 ambushVector = target.position + 2*dir - blinkyPos ;
+		    var blinky = GameObject.Find("blinky");
+		    if (blinky == null)
+                blinky = GameObject.Find("blinky_black");
+		    Vector3 blinkyPos = blinky.transform.position;
+            Vector3 ambushVector = target.position + 2*dir - blinkyPos ;
 			targetPos = new Vector3 (target.position.x+0.499f, target.position.y+0.499f) + 2*dir + ambushVector;
 			targetTile = tiles[manager.Index((int)targetPos.x, (int)targetPos.y)];
 			break;

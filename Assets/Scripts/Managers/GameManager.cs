@@ -354,9 +354,9 @@ public class GameManager : MonoBehaviour
     {
         // find and assign ghosts
         clyde = GameObject.Find("clyde") ?? GameObject.Find("clyde_black");
-        pinky = GameObject.Find("pinky");
-        inky = GameObject.Find("inky");
-        blinky = GameObject.Find("blinky");
+        pinky = GameObject.Find("pinky") ?? GameObject.Find("pinky_black");
+        inky = GameObject.Find("inky") ?? GameObject.Find("inky_black");
+        blinky = GameObject.Find("blinky") ?? GameObject.Find("blinky_black");
         pacman = GameObject.Find("pacman");
 
         if (clyde == null || pinky == null || inky == null || blinky == null) Debug.Log("One of ghosts are NULL");

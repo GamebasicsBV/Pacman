@@ -140,6 +140,7 @@ public class GhostMove : MonoBehaviour {
         switch (name)
         {
         case "blinky":
+        case "blinky_black":
             data = @"22 20
 22 26
 
@@ -149,6 +150,7 @@ public class GhostMove : MonoBehaviour {
 22 26";
             break;
         case "pinky":
+        case "pinky_black":
             data = @"14 17
 14 17
 14 20
@@ -160,6 +162,7 @@ public class GhostMove : MonoBehaviour {
 2 26";
             break;
         case "inky":
+        case "inky_black":
             data = @"16 17
 15 17
 15 20
@@ -281,12 +284,15 @@ public class GhostMove : MonoBehaviour {
         switch (gameObject.name)
         {
             case "blinky":
+            case "blinky_black":
                 return new Vector3(15f, 20f, 0f);
 
             case "pinky":
+            case "pinky_black":
                 return new Vector3(14.5f, 17f, 0f);
-            
+
             case "inky":
+            case "inky_black":
                 return new Vector3(16.5f, 17f, 0f);
 
             case "clyde":

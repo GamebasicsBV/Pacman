@@ -16,10 +16,13 @@ public class Pacdot : MonoBehaviour
 		if((!_gm.isAnimatorFlipped && other.name == "pacman") ||
 		   (_gm.isAnimatorFlipped && (
 		        other.name == "pinky" ||
-		        other.name == "clyde" ||
+		        other.name == "pinky_black" ||
+                other.name == "clyde" ||
 		        other.name == "clyde_black" ||
                 other.name == "blinky" ||
-		        other.name == "inky"
+		        other.name == "blinky_black" ||
+                other.name == "inky" ||
+	            other.name == "inky_black"
             )))
 		{
             _gm.PlaySound(Sound.Chomp);
