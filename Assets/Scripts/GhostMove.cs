@@ -42,7 +42,7 @@ public class GhostMove : MonoBehaviour {
 	enum State { Wait, Init, Scatter, Chase, Run };
 	State state;
 
-    private Vector3 _startPos;
+    private Vector3? _startPos;
     private float _timeToWhite;
     private float _timeToToggleWhite;
     private float _toggleInterval;
@@ -101,7 +101,13 @@ public class GhostMove : MonoBehaviour {
 
 	public void InitializeGhost()
 	{
-	    _startPos = getStartPosAccordingToName();
+        if (gameObject.name.StartsWith("ghost")) {
+            if (_startPos == null)
+                _startPos = transform.position;
+        }
+        else
+    	    _startPos = getStartPosAccordingToName();
+
 		waypoint = transform.position;	// to avoid flickering animation
 		state = State.Wait;
 	    timeToEndWait = Time.time + waitLength + GUINav.initialDelay;
@@ -263,8 +269,8 @@ public class GhostMove : MonoBehaviour {
             // patrol only a little
             else if (transform.name.StartsWith("ghost"))
             {
-                waypoints.Enqueue(new Vector3(pos.x, pos.y + 0.1f, 0f));
-                waypoints.Enqueue(new Vector3(pos.x, pos.y - 0.1f, 0f));
+                waypoints.Enqueue(new Vector3(pos.x, pos.y + 0.5f, 0f));
+                waypoints.Enqueue(new Vector3(pos.x, pos.y - 0.5f, 0f));
             }
         }
 
@@ -313,14 +319,14 @@ public class GhostMove : MonoBehaviour {
                 pacman.UpdateScore();
 		        _gm.NumberOfGhostKilledInLevel5++;
 
-                if (_gm.NumberOfGhostKilledInLevel5 >= _gm.NumberOfGhostInLevel5)
+                if (_gm.NumberOfGhostKilledInLevel5 >= _gm.ghosts.Length)
                     _gm.LoadNextLevel();
 		    }
 		    else if (state == State.Run && !_gm.isAnimatorFlipped || state != State.Run && _gm.isAnimatorFlipped)
 		    {
                 _gm.PlaySound(Sound.EatGhost);
 		        Calm();
-		        InitializeGhost(_startPos);
+		        InitializeGhost(_startPos ?? new Vector3());
                 pacman.UpdateScore();
 		    }
 		    else
@@ -471,4 +477,8 @@ public class GhostMove : MonoBehaviour {
         _timeToToggleWhite = Time.time + _toggleInterval;
     }
 
+    public void MoveToStartPosition()
+    {
+        transform.position = _startPos ?? new Vector3();
+    }
 }

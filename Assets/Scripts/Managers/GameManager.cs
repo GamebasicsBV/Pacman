@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     private GameObject pinky;
     private GameObject inky;
     private GameObject clyde;
+    public GameObject[] ghosts = {};
     private GameGUINavigation gui;
     public RuntimeAnimatorController PacmanAnimatorController;
     public RuntimeAnimatorController PinkyAnimatorController;
@@ -54,7 +55,6 @@ public class GameManager : MonoBehaviour
     private bool shouldMoveWallTowardBegin;
     private bool shouldMoveWallTowardEnd;
 
-    public int NumberOfGhostInLevel5 = 0;
     public int NumberOfGhostKilledInLevel5 = 0;
     public bool PacmanHasMoved = false;
 
@@ -221,12 +221,20 @@ public class GameManager : MonoBehaviour
         if (clyde != null)
 		    clyde.GetComponent<GhostMove>().InitializeGhost();
 
-        // Ruim gespawnde powerups op.
+	    if (ghosts != null)
+	        foreach (var ghost in ghosts)
+	        {
+	            ghost.GetComponent<GhostMove>().MoveToStartPosition();
+                ghost.GetComponent<GhostMove>().InitializeGhost();
+	        }
+
+	    // Ruim gespawnde powerups op.
 	    foreach (var spawnedPowerup in PowerupSpawnPoints.Where(x => x != null && x.SpawnedObject != null).Select(x => x.SpawnedObject).ToArray())
 	        Destroy(spawnedPowerup.gameObject);
 
         // Zet de muur terug op z'n plek.
-	    MoveableWall.transform.position = MoveableWallBeginPosition;
+        if (MoveableWall != null)
+	        MoveableWall.transform.position = MoveableWallBeginPosition;
 
         InverseControls(false);
 	    FlipAnimatorBack();
