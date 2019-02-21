@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
 		}
 
         // Powerups vanaf level 2.
-        if (Level >= 2 && PowerupTimer <= Time.time && PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
+        if ((Level == 2 || Level == 3) && PowerupTimer <= Time.time && PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
 	    {
 	        PowerupTimer = Time.time + PowerupSpawnTime;
             SpawnPowerup();
