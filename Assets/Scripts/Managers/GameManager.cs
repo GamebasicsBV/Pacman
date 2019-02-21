@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
     }
 
 	public void ResetScene() {
-		if (lives == 0) {
+		if (lives == 0 && Level != 5) {
 			LoadNextLevel();
 			return;
 		}
@@ -356,8 +356,11 @@ public class GameManager : MonoBehaviour
     
         // update UI too
         UIScript ui = GameObject.FindObjectOfType<UIScript>();
-        Destroy(ui.lives[ui.lives.Count - 1]);
-        ui.lives.RemoveAt(ui.lives.Count - 1);
+        if (ui != null && ui.lives != null && ui.lives.ElementAtOrDefault(ui.lives.Count - 1) != null)
+        {
+            Destroy(ui.lives[ui.lives.Count - 1]);
+            ui.lives.RemoveAt(ui.lives.Count - 1);
+        }
     }
 
     public static void DestroySelf()
