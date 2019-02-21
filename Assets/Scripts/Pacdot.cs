@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class Pacdot : MonoBehaviour
@@ -24,7 +25,7 @@ public class Pacdot : MonoBehaviour
             _gm.PlaySound(Sound.Chomp);
 
 			GameManager.score += 10;
-		    GameObject[] pacdots = GameObject.FindGameObjectsWithTag("pacdot");
+		    GameObject[] pacdots = GameObject.FindGameObjectsWithTag("pacdot").Where(x => x.name != "energizer").ToArray();
             Destroy(gameObject);
 
 		    if (pacdots.Length == 1)

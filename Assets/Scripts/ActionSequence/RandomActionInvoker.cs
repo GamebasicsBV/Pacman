@@ -26,7 +26,7 @@ public class RandomActionInvoker : MonoBehaviour
     void Update()
     {
 		timeToNextRandomInvoke -= Time.deltaTime;
-		Debug.Log(timeToNextRandomInvoke);
+
 		if (timeToNextRandomInvoke < 0) {
 			timeToNextRandomInvoke = MinTimeBetweenRandomInvokes + Random.Next(MaxTimeBetweenRandomInvokes - MinTimeBetweenRandomInvokes);
 			Action.Invoke();
