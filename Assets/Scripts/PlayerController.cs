@@ -118,11 +118,19 @@ public class PlayerController : MonoBehaviour
         Vector2 p = Vector2.MoveTowards(transform.position, _dest, speed);
         GetComponent<Rigidbody2D>().MovePosition(p);
 
-        // get the next direction from keyboard
-        if (Input.GetAxis("Horizontal") > 0) _nextDir = _isInversed ? -Vector2.right : Vector2.right;
-        if (Input.GetAxis("Horizontal") < 0) _nextDir = _isInversed ? Vector2.right : -Vector2.right;
-        if (Input.GetAxis("Vertical") > 0) _nextDir = _isInversed ? -Vector2.up : Vector2.up;
-        if (Input.GetAxis("Vertical") < 0) _nextDir = _isInversed ? Vector2.up : -Vector2.up;
+		// get the next direction from keyboard
+		if (_dir.x != 0) {
+			if (Input.GetAxis("Horizontal") > 0) _nextDir = _isInversed ? -Vector2.right : Vector2.right;
+			if (Input.GetAxis("Horizontal") < 0) _nextDir = _isInversed ? Vector2.right : -Vector2.right;
+			if (Input.GetAxis("Vertical") > 0) _nextDir = _isInversed ? -Vector2.up : Vector2.up;
+			if (Input.GetAxis("Vertical") < 0) _nextDir = _isInversed ? Vector2.up : -Vector2.up;
+		}
+		else {
+			if (Input.GetAxis("Vertical") > 0) _nextDir = _isInversed ? -Vector2.up : Vector2.up;
+			if (Input.GetAxis("Vertical") < 0) _nextDir = _isInversed ? Vector2.up : -Vector2.up;
+			if (Input.GetAxis("Horizontal") > 0) _nextDir = _isInversed ? -Vector2.right : Vector2.right;
+			if (Input.GetAxis("Horizontal") < 0) _nextDir = _isInversed ? Vector2.right : -Vector2.right;
+		}
 
 		if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 && GM) {
 			GM.PacmanHasMoved = true;
