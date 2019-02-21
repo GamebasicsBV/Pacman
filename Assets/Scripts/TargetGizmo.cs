@@ -14,7 +14,7 @@ public class TargetGizmo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if(ghost.GetComponent<AI>().targetTile != null)
+		if(ghost != null && ghost.GetComponent<AI>().targetTile != null)
 		{
 			Vector3 pos = new Vector3(ghost.GetComponent<AI>().targetTile.x, 
 										ghost.GetComponent<AI>().targetTile.y, 0f);

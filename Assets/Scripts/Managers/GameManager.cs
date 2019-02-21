@@ -54,6 +54,10 @@ public class GameManager : MonoBehaviour
     private bool shouldMoveWallTowardBegin;
     private bool shouldMoveWallTowardEnd;
 
+    public int NumberOfGhostInLevel5 = 0;
+    public int NumberOfGhostKilledInLevel5 = 0;
+    public bool PacmanHasMoved = false;
+
     public static bool scared;
     public bool isAnimatorFlipped = false;
     public bool isCameraFollowingPacman = false;
@@ -189,25 +193,40 @@ public class GameManager : MonoBehaviour
 		}
 		CalmGhosts();
 
-	    if (Level == 4)
-	        pacman.transform.position = new Vector3(13f, 30f, 0f);
-        else
-	        pacman.transform.position = new Vector3(15f, 11f, 0f);
+	    if (pacman != null)
+	    {
+	        if (Level == 4)
+	            pacman.transform.position = new Vector3(13f, 30f, 0f);
+	        else
+	            pacman.transform.position = new Vector3(15f, 11f, 0f);
+	    }
 
-        blinky.transform.position = new Vector3(15f, 20f, 0f);
-		pinky.transform.position = new Vector3(14.5f, 17f, 0f);
-		inky.transform.position = new Vector3(16.5f, 17f, 0f);
-		clyde.transform.position = new Vector3(12.5f, 17f, 0f);
+	    if (blinky != null)
+            blinky.transform.position = new Vector3(15f, 20f, 0f);
+        if (pinky != null)
+            pinky.transform.position = new Vector3(14.5f, 17f, 0f);
+        if (inky != null)
+	        inky.transform.position = new Vector3(16.5f, 17f, 0f);
+		if (clyde != null)
+		    clyde.transform.position = new Vector3(12.5f, 17f, 0f);
 
-		pacman.GetComponent<PlayerController>().ResetDestination();
-		blinky.GetComponent<GhostMove>().InitializeGhost();
-		pinky.GetComponent<GhostMove>().InitializeGhost();
-		inky.GetComponent<GhostMove>().InitializeGhost();
-		clyde.GetComponent<GhostMove>().InitializeGhost();
+        if (pacman != null)
+		    pacman.GetComponent<PlayerController>().ResetDestination();
+        if (blinky != null)
+		    blinky.GetComponent<GhostMove>().InitializeGhost();
+        if (pinky != null)
+		    pinky.GetComponent<GhostMove>().InitializeGhost();
+        if (inky != null)
+		    inky.GetComponent<GhostMove>().InitializeGhost();
+        if (clyde != null)
+		    clyde.GetComponent<GhostMove>().InitializeGhost();
 
         // Ruim gespawnde powerups op.
 	    foreach (var spawnedPowerup in PowerupSpawnPoints.Where(x => x != null && x.SpawnedObject != null).Select(x => x.SpawnedObject).ToArray())
 	        Destroy(spawnedPowerup.gameObject);
+
+        // Zet de muur terug op z'n plek.
+	    MoveableWall.transform.position = MoveableWallBeginPosition;
 
         InverseControls(false);
 	    FlipAnimatorBack();
@@ -236,11 +255,16 @@ public class GameManager : MonoBehaviour
         isAnimatorFlipped = true;
         RuntimeAnimatorController[] animators = { BlinkyAnimatorController, PinkyAnimatorController, InkyAnimatorController, ClydeAnimatorController };
 
-        pacman.GetComponent<Animator>().runtimeAnimatorController = animators[new System.Random().Next(0, 4)];
-        blinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
-        pinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
-        inky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
-        clyde.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        if (pacman != null)
+            pacman.GetComponent<Animator>().runtimeAnimatorController = animators[new System.Random().Next(0, 4)];
+        if (blinky != null)
+            blinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        if (pinky != null)
+            pinky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        if (inky != null)
+            inky.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        if (clyde != null)
+            clyde.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
         _timeToFlipBack = Time.time + scareLength;
 
         Debug.Log("Flip Animators");
@@ -249,11 +273,16 @@ public class GameManager : MonoBehaviour
     public void FlipAnimatorBack()
     {
         isAnimatorFlipped = false;
-        pacman.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
-        blinky.GetComponent<Animator>().runtimeAnimatorController = BlinkyAnimatorController;
-        pinky.GetComponent<Animator>().runtimeAnimatorController = PinkyAnimatorController;
-        inky.GetComponent<Animator>().runtimeAnimatorController = InkyAnimatorController;
-        clyde.GetComponent<Animator>().runtimeAnimatorController = ClydeAnimatorController;
+        if (pacman != null)
+            pacman.GetComponent<Animator>().runtimeAnimatorController = PacmanAnimatorController;
+        if (blinky != null)
+            blinky.GetComponent<Animator>().runtimeAnimatorController = BlinkyAnimatorController;
+        if (pinky != null)
+            pinky.GetComponent<Animator>().runtimeAnimatorController = PinkyAnimatorController;
+        if (inky != null)
+            inky.GetComponent<Animator>().runtimeAnimatorController = InkyAnimatorController;
+        if (clyde != null)
+            clyde.GetComponent<Animator>().runtimeAnimatorController = ClydeAnimatorController;
 
         Debug.Log("Flip Animators back");
     }
@@ -261,10 +290,14 @@ public class GameManager : MonoBehaviour
     public void ScareGhosts()
 	{
 		scared = true;
-		blinky.GetComponent<GhostMove>().Frighten();
-		pinky.GetComponent<GhostMove>().Frighten();
-		inky.GetComponent<GhostMove>().Frighten();
-		clyde.GetComponent<GhostMove>().Frighten();
+        if (blinky != null)
+		    blinky.GetComponent<GhostMove>().Frighten();
+        if (pinky != null)
+	    pinky.GetComponent<GhostMove>().Frighten();
+		if (inky != null)
+		    inky.GetComponent<GhostMove>().Frighten();
+        if (clyde != null)
+	        clyde.GetComponent<GhostMove>().Frighten();
 		_timeToCalm = Time.time + scareLength;
 
         Debug.Log("Ghosts Scared");
@@ -273,10 +306,14 @@ public class GameManager : MonoBehaviour
 	public void CalmGhosts()
 	{
 		scared = false;
-		blinky.GetComponent<GhostMove>().Calm();
-		pinky.GetComponent<GhostMove>().Calm();
-		inky.GetComponent<GhostMove>().Calm();
-		clyde.GetComponent<GhostMove>().Calm();
+        if (blinky != null)
+		    blinky.GetComponent<GhostMove>().Calm();
+        if (pinky != null)
+		    pinky.GetComponent<GhostMove>().Calm();
+        if (inky != null)
+	        inky.GetComponent<GhostMove>().Calm();
+        if (clyde != null)
+	        clyde.GetComponent<GhostMove>().Calm();
 	    PlayerController.killstreak = 0;
     }
 
