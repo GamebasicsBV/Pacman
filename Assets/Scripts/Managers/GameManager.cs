@@ -224,8 +224,11 @@ public class GameManager : MonoBehaviour
 	    if (ghosts != null)
 	        foreach (var ghost in ghosts)
 	        {
-	            ghost.GetComponent<GhostMove>().MoveToStartPosition();
-                ghost.GetComponent<GhostMove>().InitializeGhost();
+	            if (ghost != null)
+	            {
+	                ghost.GetComponent<GhostMove>().MoveToStartPosition();
+	                ghost.GetComponent<GhostMove>().InitializeGhost();
+	            }
 	        }
 
 	    // Ruim gespawnde powerups op.
