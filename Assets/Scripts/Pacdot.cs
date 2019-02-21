@@ -21,6 +21,8 @@ public class Pacdot : MonoBehaviour
 		        other.name == "inky"
             )))
 		{
+            _gm.PlaySound(Sound.Chomp);
+
 			GameManager.score += 10;
 		    GameObject[] pacdots = GameObject.FindGameObjectsWithTag("pacdot");
             Destroy(gameObject);

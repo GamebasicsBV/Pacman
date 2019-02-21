@@ -23,6 +23,8 @@ public class Powerup : MonoBehaviour {
     {
         if (col.name == "pacman" && !gm.isAnimatorFlipped)
         {
+            gm.PlaySound(Sound.EatFruit);
+
             if (gm.Level == 2)
             {
                 gm.InverseControls();
