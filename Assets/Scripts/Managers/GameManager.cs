@@ -148,48 +148,57 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-	void Update () 
-	{
-		if(scared && _timeToCalm <= Time.time)
-			CalmGhosts();
+    void Update()
+    {
+        if (scared && _timeToCalm <= Time.time)
+            CalmGhosts();
 
         if (isAnimatorFlipped && _timeToFlipBack <= Time.time)
             FlipAnimatorBack();
 
         if (isCameraFollowingPacman)
-            camera.transform.position = new Vector3(pacman.transform.position.x, pacman.transform.position.y, camera.transform.position.z);
+            camera.transform.position = new Vector3(pacman.transform.position.x, pacman.transform.position.y,
+                camera.transform.position.z);
 
-		if (isCameraBackgroundGoingFlashy && _timeToCameraBackgroundFlash <= Time.time) {
-			Color[] colors = { Color.cyan, Color.green, Color.blue, Color.yellow, Color.red, Color.magenta };
-			camera.backgroundColor = colors[new System.Random().Next(colors.Length)];
-			_timeToCameraBackgroundFlash = Time.time + 1;
-		}
+        if (isCameraBackgroundGoingFlashy && _timeToCameraBackgroundFlash <= Time.time)
+        {
+            Color[] colors = {Color.cyan, Color.green, Color.blue, Color.yellow, Color.red, Color.magenta};
+            camera.backgroundColor = colors[new System.Random().Next(colors.Length)];
+            _timeToCameraBackgroundFlash = Time.time + 1;
+        }
 
         // Powerups vanaf level 2.
-        if ((Level == 2 || Level == 3) && PowerupTimer <= Time.time && PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
-	    {
-	        PowerupTimer = Time.time + PowerupSpawnTime;
+        if ((Level == 2 || Level == 3) && PowerupTimer <= Time.time &&
+            PowerupSpawnPoints.Count(x => x.SpawnedObject != null) < PowerupMax)
+        {
+            PowerupTimer = Time.time + PowerupSpawnTime;
             SpawnPowerup();
-	    }
+        }
 
-	    if (Level == 2 && MoveableWall != null) {
-	        if (shouldMoveWallTowardEnd)
-	        {
-	            MoveableWall.transform.position = Vector3.MoveTowards(MoveableWall.transform.position, MoveableWallEndPosition, 0.3f);
-	            if (Vector3.Distance(MoveableWall.transform.position, MoveableWallEndPosition) < 0.001f)
-	                shouldMoveWallTowardEnd = false;
-	        }
+        if (Level == 2 && MoveableWall != null)
+        {
+            if (shouldMoveWallTowardEnd)
+            {
+                MoveableWall.transform.position =
+                    Vector3.MoveTowards(MoveableWall.transform.position, MoveableWallEndPosition, 0.3f);
+                if (Vector3.Distance(MoveableWall.transform.position, MoveableWallEndPosition) < 0.001f)
+                    shouldMoveWallTowardEnd = false;
+            }
 
-	        if (shouldMoveWallTowardBegin)
-	        {
-	            MoveableWall.transform.position = Vector3.MoveTowards(MoveableWall.transform.position, MoveableWallBeginPosition, 0.3f);
-	            if (Vector3.Distance(MoveableWall.transform.position, MoveableWallBeginPosition) < 0.001f)
-	                shouldMoveWallTowardBegin = false;
-	        }
-	    }
+            if (shouldMoveWallTowardBegin)
+            {
+                MoveableWall.transform.position =
+                    Vector3.MoveTowards(MoveableWall.transform.position, MoveableWallBeginPosition, 0.3f);
+                if (Vector3.Distance(MoveableWall.transform.position, MoveableWallBeginPosition) < 0.001f)
+                    shouldMoveWallTowardBegin = false;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Home))
+            LoadNextLevel();
     }
 
-	public void ResetScene()
+    public void ResetScene()
 	{
 	    PacmanHasMoved = false;
 
