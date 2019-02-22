@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     public int NumberOfGhostKilledInLevel5 = 0;
     public bool PacmanHasMoved = false;
+    public bool pacmanHasSpeedBoost = false;
 
     public static bool scared;
     public bool isAnimatorFlipped = false;
@@ -262,7 +263,8 @@ public class GameManager : MonoBehaviour
 	        MoveableWall.transform.position = MoveableWallBeginPosition;
 
         InverseControls(false);
-	    FlipAnimatorBack();
+	    ToggleSpeed(false);
+        FlipAnimatorBack();
 
         gameState = GameState.Init;  
         gui.H_ShowReadyScreen();
@@ -413,6 +415,35 @@ public class GameManager : MonoBehaviour
 		else {
 			MoveInvertEffect.StopDoingTheEffect();
 		}
+    }
+
+    public bool IsInversed()
+    {
+        return pacman.GetComponent<PlayerController>()._isInversed;
+    }
+
+    public void ToggleSpeed(bool? enableSpeedBoost = null)
+    {
+        if (Level != 2)
+            return;
+
+        const int speedBoost = 1;
+        DizzyEffect.StartDoingTheDizzy();
+        var playerController = pacman.GetComponent<PlayerController>();
+        if ((enableSpeedBoost.HasValue && enableSpeedBoost.Value == false) || !enableSpeedBoost.HasValue && pacmanHasSpeedBoost)
+        {
+            if (pacmanHasSpeedBoost)
+                playerController.speed = playerController.speed -= speedBoost;
+            pacmanHasSpeedBoost = false;
+            MoveInvertEffect.StopDoingTheEffect();
+        }
+        else
+        {
+            if (!pacmanHasSpeedBoost)
+                playerController.speed = playerController.speed += speedBoost;
+            pacmanHasSpeedBoost = true;
+            MoveInvertEffect.StartDoingTheEffect();
+        }
     }
 
     public void ToggleMoveableWall()

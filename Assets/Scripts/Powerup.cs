@@ -27,7 +27,15 @@ public class Powerup : MonoBehaviour {
 
             if (gm.Level == 2)
             {
-                gm.InverseControls();
+                if (gm.IsInversed())
+                    gm.InverseControls();
+                else if (gm.pacmanHasSpeedBoost)
+                    gm.ToggleSpeed();
+                else if (new System.Random().Next(0, 4) <= 2)
+                    gm.ToggleSpeed();
+                else
+                    gm.InverseControls();
+                
                 gm.ToggleMoveableWall();
 				Level2PickupEffect?.Invoke();
             }
