@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Home))
+        if (Input.GetKey(KeyCode.Home) || Input.GetKey(KeyCode.P))
             LoadNextLevel();
     }
 
